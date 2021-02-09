@@ -6,18 +6,18 @@ output: html_document
 ---
 
 **Part 1**
-## Calling Libraries
+# Calling Libraries
 ```{r}
 library(tidyverse)
 library(gganimate)
 ```
-## Read the csv file in dataframe variable
+# Read the csv file in dataframe variable
 ```{r}
 Df <- read.csv ("C:/Users/Himanshu Singh/Desktop/full_grouped.csv", header =T)
 view(Df)
 ```
 **Part 2**
-## Group the data by Country region and Sum Deaths
+# Group the data by Country region and Sum Deaths
 ```{r}
 Death_grp <-Df %>%
   group_by(Date,Country.Region) %>%
@@ -26,7 +26,7 @@ Death_grp <-Df %>%
 
 view(Death_grp)
 ```
-## Create ranks and value lable for the dataset
+#Create ranks and value lable for the dataset
 ```{r}
 Death_grp <- as.data.frame(Death_grp) %>%
   group_by(Date) %>%
@@ -39,7 +39,7 @@ Death_grp <- as.data.frame(Death_grp) %>%
 view(Death_grp)
 ```
 **Part 3**
-## Use ggplot for the ranked dataset
+#Use ggplot for the ranked dataset
 ```{r}
 staticplot = ggplot(Death_grp, aes(rank, group = Country.Region, 
                     fill = as.factor(Country.Region), color = as.factor(Country.Region))) +
@@ -72,7 +72,7 @@ staticplot = ggplot(Death_grp, aes(rank, group = Country.Region,
 staticplot
 ```
 **Part 4**
-## Animate the ggplot
+# Animate the ggplot
 ```{r}
 anim = staticplot + transition_states(Date, transition_length = 4, state_length = 1) +
   view_follow(fixed_x = TRUE)  +
@@ -80,7 +80,7 @@ anim = staticplot + transition_states(Date, transition_length = 4, state_length 
        subtitle  =  "Top 15 Countries",
        caption  = "Death Cases")
 ```
-## Create GIF
+# Create GIF
 ```{r}
 animate(anim, 1000, fps = 20,  width = 1200, height = 1000, 
         renderer = gifski_renderer("Death.gif"))
